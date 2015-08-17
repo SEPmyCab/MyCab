@@ -1,0 +1,207 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 10, 2015, 5:47:21 PM
+    Author     : Pathum
+*/
+
+.image-header-margin{
+    
+    margin-left: 30px;
+}
+.btn-header-margin{
+    
+    margin-top: -60px;
+    margin-right:30px;
+    float: right;
+}
+
+.navbar-bottom {
+min-height: 100px;
+margin-top: 100px;
+background-color: #28364f;
+padding-top: 35px;
+color:#FFFFFF;
+}
+
+#footer {
+  /* height: 60px;
+  background-color: #E1E1E1;
+  margin-top:50px;
+  padding-top:20px;
+  padding-bottom:20px;
+  */
+  
+  clear: both;
+  width: auto;
+  height: 60px;
+  background-color: #E1E1E1;
+  text-align: center;
+  margin-top:50px;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+  
+#wrapper
+{
+    width: 1080px;
+    background-color: white;
+    margin: 0 auto;
+    padding: 10px;
+   // border: 2px solid #dedede;
+   // box-shadow: inset -5px -5px #888;
+   -moz-box-shadow: 0 0 8px 8px #E1E1E1;
+-webkit-box-shadow: 0 0 8px 8px #E1E1E1;
+ box-shadow: 0 0 8px 8px #E1E1E1;
+}
+
+
+#sidebar
+{
+    float: right;
+    width: 250px;
+    height: 400px;
+    margin: 20px 10px;
+    padding: 10px;
+   // border: 2px solid #E3E3E3;
+}
+
+
+#navigation
+{
+    height: 60px;
+  //  border: 3px solid #E1E1E1;
+    margin-top: 20px;
+    text-shadow: 0.1em 0.1em #E1E1E1;
+
+}
+
+
+
+
+#nav
+{
+    list-style: none;
+}
+
+#nav ul
+{
+    margin: 0;
+    padding: 0;
+    width: auto;
+    display: none;
+}
+
+#nav li
+{
+    font-size: 24px;
+    float: left;
+    position: relative;
+    width: 180px;
+    height: 50px;
+}
+
+#nav a:link, nav a:active, nav a:visited
+{
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+#nav a:hover
+{
+    color: lightblue;
+}
+
+ 
+
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+
+
+body p
+{
+    font-size: 0.8em;
+    line-height: 1.28;
+}
+
+
+/*#content_area
+{
+    float: left;
+    width: 100%;
+    margin: 20px 0 20px 0;
+    padding: 10px;
+}*/
+
+#banner1
+{
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 5px solid #dedede;    
+    height: 509px;
+    width: 1067px;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a, .navbar-default .navbar-nav .open .dropdown-menu {
+    background-color: #E1E1E1;
+    color: #333333;
+  }
+  
+  .container {
+    width: 100%;
+}
+
+.driverTable
+{
+    width: 750px;
+    height: 250px;
+    margin: 10px 10px 10px 0;
+    border: 3px solid #E3E3E3;
+    border-radius: 10px;
+    moz-border-radius: 10px;
+}
+
+.driverTable tr th, .driverTable tr td
+{
+    text-align: left;
+    padding: 0px 30px 0 30px;
+}
+
+.driverTable img
+{
+    padding: 0px 10px 10px 10px;
+    height: 150px;
+    width: 150px;
+}
+
+.inputField
+{
+    width: 280px;
+    padding: 4px;
+}
+
+label
+{
+    float: left;
+    width: 100px;
+    font-weight: bold;
+}
+
+
+.userLabel{
+    margin-top: -60px;
+    margin-right:300px;
+    float: right;
+    color: #333333;
+}
