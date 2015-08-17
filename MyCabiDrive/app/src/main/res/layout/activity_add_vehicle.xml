@@ -1,0 +1,192 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.pathum.mycabidrive.AddVehicleActivity">
+
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter new Vehicle details..."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/SV_register"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Register Number"
+                android:id="@+id/TV_reg_no"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_Reg_No"
+
+                android:layout_below="@+id/TV_reg_no"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Type"
+                android:id="@+id/TV_Type"
+                android:layout_below="@+id/ET_Reg_No"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="21px"
+                android:id="@+id/SP_vehicle_Type"
+                android:layout_below="@+id/TV_Type"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Manufacturer"
+                android:id="@+id/TV_manu"
+                android:layout_below="@+id/SP_vehicle_Type"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_manu"
+
+                android:layout_below="@+id/TV_manu"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Model"
+                android:id="@+id/TV_model"
+                android:layout_below="@+id/ET_manu"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_model"
+
+                android:layout_below="@+id/TV_model"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Number of Seats"
+                android:id="@+id/TV_seats"
+                android:layout_below="@+id/ET_model"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:inputType="number"
+                android:id="@+id/ET_seats"
+
+                android:layout_below="@+id/TV_seats"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Air Conditioning"
+                android:id="@+id/TV_ac"
+                android:layout_below="@+id/ET_seats"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroup"
+               android:layout_below="@+id/TV_ac"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="53dp">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A/C"
+                android:id="@+id/ac"
+                android:layout_below="@+id/TV_ac"
+
+                android:layout_marginBottom="113dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non A/C"
+                android:id="@+id/non_ac"
+                android:layout_alignTop="@+id/ac"
+                android:layout_below="@+id/TV_ac"
+                android:layout_toRightOf="@+id/TV_ac"
+                android:layout_toEndOf="@+id/TV_seats" />
+            </RadioGroup>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Vehicle"
+                android:id="@+id/B_add_vehicle"
+                android:background="@color/darkBlue"
+                android:textColor="@color/white"
+                android:onClick="onClick"
+                android:layout_below="@+id/radioGroup"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

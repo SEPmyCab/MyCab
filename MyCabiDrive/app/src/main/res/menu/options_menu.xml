@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu class="hiddenSpellError" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    id="@+id/camera"
+    android:title="Camera" />
+    id="@+id/gallery"
+    android:title="Gallery" />
+</menu>

@@ -1,0 +1,194 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.pathum.mycabidrive.PersonalActivity">
+
+    <TextView
+    android:id="@+id/textView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Edit your details here..."
+    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Personal Details"
+        android:id="@+id/textView"
+        android:layout_below="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/SV_register"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="User Name"
+                android:id="@+id/TV_username"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_Username"
+                android:editable="false"
+                android:layout_below="@+id/TV_username"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NIC"
+                android:id="@+id/TV_NIC"
+
+                android:layout_below="@+id/ET_Username"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_nic"
+                android:editable="false"
+                android:layout_below="@+id/TV_NIC"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Phone"
+                android:id="@+id/TV_PHONE"
+
+                android:layout_below="@+id/ET_nic"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/ET_phone"
+                android:layout_below="@+id/TV_PHONE"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Email Address(Optional)"
+                android:id="@+id/TV_email"
+
+                android:layout_below="@+id/ET_phone"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/ET_Email"
+                android:layout_below="@+id/TV_email"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:text="Profile Picture"
+                 android:id="@+id/TV_photo"
+                 android:layout_marginTop="20dp"
+
+                 android:layout_below="@+id/ET_Email"
+                 android:layout_alignParentLeft="true"
+                 android:textColor="#2A679E" />
+             <ImageView
+                 android:id="@+id/ImageView"
+                 android:layout_width="100dp"
+                 android:layout_height="160dp"
+                 android:src="@drawable/imgpreview"
+                 android:layout_below="@+id/TV_photo"
+                 android:layout_alignRight="@+id/TV_email"
+                 android:layout_alignEnd="@+id/TV_email"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true" />
+             <TableLayout
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+
+                 android:orientation="horizontal"
+                 android:stretchColumns="*"
+
+                 android:layout_below="@+id/ImageView"
+                 android:background="#808080"
+                 android:id="@+id/tableLayout">
+                 <TableRow >
+                     <Button
+                         android:layout_width="fill_parent"
+                         android:id="@+id/imguploadbtn"
+                         android:layout_height="wrap_content"
+                         android:layout_margin="5dip"
+                         android:text="Upload" />
+                     <Button
+                         android:layout_width="fill_parent"
+                         android:id="@+id/imgcancelbtn"
+                         android:layout_height="wrap_content"
+                         android:layout_margin="5dip"
+                         android:text="Cancel" />
+                 </TableRow>
+             </TableLayout>-->
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Changes"
+                android:id="@+id/B_savePersonal"
+                android:background="@color/darkBlue"
+                android:textColor="@color/white"
+                android:onClick="onClick"
+                android:layout_below="@+id/ET_Email"
+                android:layout_marginTop="10dp"
+                 />
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

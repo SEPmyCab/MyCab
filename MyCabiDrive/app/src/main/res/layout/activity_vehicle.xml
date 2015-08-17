@@ -1,0 +1,196 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.pathum.mycabidrive.VehicleActivity">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter your details here..."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Vehicle Details"
+        android:id="@+id/textView"
+        android:layout_below="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/SV_vehicle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Select your vehicle  Register Number"
+                android:id="@+id/TV_regnou"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/TV_regnou" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Type"
+                android:id="@+id/TV_Typeu"
+                android:layout_below="@+id/spinner1"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="21px"
+                android:id="@+id/SP_vehicle_Typeu"
+                android:layout_below="@+id/TV_Typeu"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Manufacturer"
+                android:id="@+id/TV_manuu"
+                android:layout_below="@+id/SP_vehicle_Typeu"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_manuu"
+
+                android:layout_below="@+id/TV_manuu"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Model"
+                android:id="@+id/TV_modelu"
+                android:layout_below="@+id/ET_manuu"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:id="@+id/ET_modelu"
+
+                android:layout_below="@+id/TV_modelu"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Number of Seats"
+                android:id="@+id/TV_seatsu"
+                android:layout_below="@+id/ET_modelu"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textSize="21px"
+                android:ems="10"
+                android:inputType="number"
+                android:id="@+id/ET_seatsu"
+
+                android:layout_below="@+id/TV_seatsu"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Air Conditioning"
+                android:id="@+id/TV_acu"
+                android:layout_below="@+id/ET_seatsu"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentLeft="true"
+                android:textColor="#2A679E" />
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioGroupu"
+                android:layout_below="@+id/TV_acu"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="53dp">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A/C"
+                    android:id="@+id/acu"
+                    android:layout_below="@+id/TV_acu"
+
+                    android:layout_marginBottom="113dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non A/C"
+                    android:id="@+id/non_acu"
+                    android:layout_alignTop="@+id/acu"
+                    android:layout_below="@+id/TV_acu"
+                    android:layout_toRightOf="@+id/TV_acu"
+                    />
+            </RadioGroup>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Vehicle Details"
+                android:id="@+id/B_add_vehicleu"
+                android:background="@color/darkBlue"
+                android:textColor="@color/white"
+                android:onClick="onClick"
+                android:layout_below="@+id/radioGroupu"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>
