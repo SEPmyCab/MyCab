@@ -46,8 +46,8 @@ public class Availability extends ActionBarActivity implements View.OnClickListe
 
     Location location;
     JSONParser availabilityupdates=new JSONParser();
-    private static final String FETCH_VEHICLES_URL = "http://unibook.byethost15.com/myCab/fetch_vehicles.php";
-    private static final String UPDATE_AVAILABILITY_URL="http://unibook.byethost15.com/myCab/driverLocationUpdate2.php";
+    private static final String FETCH_VEHICLES_URL = "http://blinkcab.host56.com/myCab2/fetch_vehicles.php";
+    private static final String UPDATE_AVAILABILITY_URL="http://blinkcab.host56.com/myCab2/driverLocationUpdate2.php";
     private static final String TAG_SUCCESS= "success";
     private static final String TAG_MESSAGE= "message";
     private ArrayList<Vehicle> vehicle;

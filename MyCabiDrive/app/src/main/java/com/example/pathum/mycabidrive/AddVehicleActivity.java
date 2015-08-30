@@ -41,7 +41,7 @@ Spinner typeField;
     JSONParser jsonParser = new JSONParser();
     String mStringnic;
 
-    private static final String LOGIN_URL = "http://unibook.byethost15.com/myCab/add_vehicle.php";
+    private static final String LOGIN_URL = "http://blinkcab.host56.com/myCab2/add_vehicle.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private ProgressDialog pDialog;

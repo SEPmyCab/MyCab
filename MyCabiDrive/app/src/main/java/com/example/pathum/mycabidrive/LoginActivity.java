@@ -33,7 +33,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private ProgressDialog pDialog;
 
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://unibook.byethost15.com/myCab/login.php";
+    private static final String LOGIN_URL = "http://blinkcab.host56.com/myCab2/login.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     public static String dbuname;
