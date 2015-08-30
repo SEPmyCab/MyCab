@@ -228,7 +228,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
         @Override
         protected String doInBackground(Void... params) {
-            String strUrl = "http://unibook.byethost15.com/myCab/retrieve_drivers.php";
+            String strUrl = "http://blinkcab.host56.com/myCab2/retrieve_drivers.php";
             URL url = null;
             StringBuffer sb = new StringBuffer();
             try {
@@ -308,7 +308,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                     @Override
                     public View getInfoWindow(Marker marker) {
                         HashMap<String, String> marker_data = extraMarkerInfo.get(marker.getId());
-                        String url="http://unibook.byethost15.com/CabCI452/"+marker_data.get("Photo");
+                        String url="http://blinkcab.host56.com/CabCI452/"+marker_data.get("Photo");
                         View v=getLayoutInflater().inflate(R.layout.info_window, null);
                         ImageView Image=(ImageView)v.findViewById(R.id.IV_Driver);
 /*
@@ -337,7 +337,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                         tvcer.setText(marker_data.get("Certification"));
                         tvvehicle.setText("Vehicle No:-"+marker_data.get("Vehicle_ID"));
                      //   Image.setImageResource("http://unibook.byethost15.com/CabCI452/"+marker_data.get("Photo"));
-                        String url="http://unibook.byethost15.com/CabCI452/"+marker_data.get("Photo");
+                        String url="http://blinkcab.host56.com/CabCI452/"+marker_data.get("Photo");
 
                         Log.d("url",url);
                         new DownloadImageTask((ImageView) v.findViewById(R.id.IV_Driver))
