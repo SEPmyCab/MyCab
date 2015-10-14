@@ -26,4 +26,20 @@
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal|top" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request"
+        android:id="@+id/btnRequest"
+        android:layout_gravity="right|bottom"
+        android:onClick="onClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hires"
+        android:id="@+id/btnHires"
+        android:layout_gravity="center_horizontal|bottom"
+        android:onClick="onClick"/>
+
 </FrameLayout>

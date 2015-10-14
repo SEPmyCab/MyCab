@@ -1,5 +1,7 @@
 package com.example.pathum.mycabpickme;
-
+/**
+ * Created by Nu on 6/24/2015.
+ */
 
 import android.util.Log;
 
@@ -38,6 +40,11 @@ public class JSONParser {
 
     }
 
+    /**
+     * http request get method
+     * @param url connection url
+     * @return json object with attributes parsed from server
+     */
     public JSONObject getJSONFromUrl(String url) {
 
 
@@ -119,6 +126,14 @@ public class JSONParser {
 
 
     }
+
+    /**
+     * http post request
+     * @param url connection url
+     * @param method post/get
+     * @param params parameters that has to be passed to the server
+     * @return json object with attributes parsed from server
+     */
     public JSONObject makeHttpRequest(String url, String method,List<NameValuePair> params) {
 
 
@@ -133,6 +148,7 @@ public class JSONParser {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
 
                 HttpPost httpPost = new HttpPost(url);
+                httpPost.setHeader("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
 
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
 
@@ -191,7 +207,7 @@ public class JSONParser {
             }
 
             is.close();
-           Log.d("passed string",sb.toString());
+           Log.e("passed string",sb.toString());
             json = sb.toString();
 
         } catch (Exception e) {

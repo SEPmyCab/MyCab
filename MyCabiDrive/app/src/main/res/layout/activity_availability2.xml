@@ -6,7 +6,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Vehical"
+        android:text="Select Vehicle"
         android:onClick="onClick"
         android:id="@+id/btn_SelectVehical" />
 

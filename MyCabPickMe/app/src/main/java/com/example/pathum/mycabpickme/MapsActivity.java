@@ -1,13 +1,16 @@
 package com.example.pathum.mycabpickme;
-
+/**
+ * Created by Nu on 7/11/2015.
+ */
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.location.Location;
-import android.location.LocationListener;
+
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -30,8 +33,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,27 +44,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class MapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener,View.OnClickListener {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
- // Might be null if Google Play services APK is not available.
+    private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     public static final String TAG = MapsActivity.class.getSimpleName();
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+
     private LocationRequest mLocationRequest;
-    public double Latitude;
-    public double Longitude;
+
     HashMap<String, HashMap> extraMarkerInfo = new HashMap<String, HashMap>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_maps);
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -75,14 +79,19 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        int interval=10 * 1000;
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-        //setUpMapIfNeeded();
+                .setInterval(interval)
+                .setFastestInterval(interval);
+
         new RetrieveTask().execute();
 
     }
+
+    /**
+     * Shows an alert if gps is disabled
+     */
     private void showGPSDisabledAlertToUser(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
@@ -212,7 +221,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
-                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                connectionResult.startResolutionForResult(this, ApplicationConstants.CONNECTION_FAILURE_RESOLUTION_REQUEST);
             } catch (IntentSender.SendIntentException e) {
                 e.printStackTrace();
             }
@@ -221,6 +230,21 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case(R.id.btnRequest):
+                Intent i = new Intent(MapsActivity.this, RequestActivity.class);
+
+                startActivity(i);
+                break;
+            case(R.id.btnHires):
+                Intent j = new Intent(MapsActivity.this, HireActivity.class);
+
+                startActivity(j);
+                break;
+        }
+    }
 
 
     // Background task to retrieve locations from remote mysql server
@@ -285,30 +309,21 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 Log.d("Lat",marker.get("Latitude"));
                 Log.d("Long",marker.get("Longitude"));
                 LatLng latlng = new LatLng(Double.parseDouble(marker.get("Latitude")), Double.parseDouble(marker.get("Longitude")));
-              //  MarkerOptions option = new MarkerOptions()
-                  //      .icon(BitmapDescriptorFactory.fromResource(R.drawable.mycars))
-                   //     .flat(true)
-                   //     .rotation(0)
-                    //    .position(latlng)
-                       // .title(marker.get("FName")+" "+marker.get("LName<br/>")+marker.get("Phone<br/>")+marker.get("Certification<br/>")+"Vehicle No:-"+marker.get("Vehicle_ID"))
-                        //.snippet(marker.get("Phone"))
-                        //.snippet(marker.get("Certification"))
-                       // .snippet("Vehicle No:-"+marker.get("Vehicle_ID"))
+
                        ;
 
-               // mMap.addMarker(option);
+
                 Marker m = mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.mycars))
                         .flat(true)
                         .position(latlng));
-                        //.title(hashMap.get(TAG_ADDRESS))
-                      //  .snippet(hashMap.get(TAG_NAME)));
+
                 extraMarkerInfo.put(m.getId(),marker);
                 mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                     @Override
                     public View getInfoWindow(Marker marker) {
                         HashMap<String, String> marker_data = extraMarkerInfo.get(marker.getId());
-                        String url="http://blinkcab.host56.com/CabCI452/"+marker_data.get("Photo");
+                        String url="http://mycab.hostingsiteforfree.com/CabCI452/"+marker_data.get("Photo");
                         View v=getLayoutInflater().inflate(R.layout.info_window, null);
                         ImageView Image=(ImageView)v.findViewById(R.id.IV_Driver);
 /*
@@ -337,7 +352,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                         tvcer.setText(marker_data.get("Certification"));
                         tvvehicle.setText("Vehicle No:-"+marker_data.get("Vehicle_ID"));
                      //   Image.setImageResource("http://unibook.byethost15.com/CabCI452/"+marker_data.get("Photo"));
-                        String url="http://blinkcab.host56.com/CabCI452/"+marker_data.get("Photo");
+                        String url="http://mycab.hostingsiteforfree.com/CabCI452/"+marker_data.get("Photo");
 
                         Log.d("url",url);
                         new DownloadImageTask((ImageView) v.findViewById(R.id.IV_Driver))
@@ -395,5 +410,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         public void onError() {}
     }
 
-}
+
+    }
 

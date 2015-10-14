@@ -1,5 +1,7 @@
 package com.example.pathum.mycabpickme;
-
+/**
+ * Created by Nu on 6/24/2015.
+ */
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,39 +26,30 @@ import java.util.List;
 
 
 public class RegisterActivity extends ActionBarActivity implements View.OnClickListener  {
-   // JSONParser jsonParser = new JSONParser();
+
     private ProgressDialog pDialog;
 
 
-    EditText fnameField;
-    EditText lnameField;
-
-    EditText passwordField;
-    EditText conpwdField;
-EditText emailField;
-    EditText phoneField;
+    EditText fnameField,lnameField,passwordField,conpwdField,emailField,phoneField;
 
 
     Button btnreg;
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://blinkcab.host56.com/myCab2/pregister.php";
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
 
         fnameField = (EditText) findViewById(R.id.ET_FirstName);
         lnameField = (EditText) findViewById(R.id.ET_LastName);
-emailField=(EditText)findViewById(R.id.ET_email);
+        emailField=(EditText)findViewById(R.id.ET_email);
         passwordField = (EditText) findViewById(R.id.ET_Password);
         conpwdField=(EditText)findViewById(R.id.ET_ConPassword);
-
         phoneField = (EditText) findViewById(R.id.ET_PhoneNo);
 
 
@@ -126,18 +119,18 @@ emailField=(EditText)findViewById(R.id.ET_email);
                     params.add(new BasicNameValuePair("cpwd", cPwd));
                     Log.d("request!", "starting");
 
-                    JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
+                    JSONObject json = jsonParser.makeHttpRequest(ApplicationConstants.REGISTER_URL, "POST", params);
 
                     Log.d("Register attempt", json.toString());
 
-                    success = json.getInt(TAG_SUCCESS);
+                    success = json.getInt(ApplicationConstants.TAG_SUCCESS);
                     if (success == 1) {
                         Log.d("Driver Created!", json.toString());
                         finish();
-                        return json.getString(TAG_MESSAGE);
+                        return json.getString(ApplicationConstants.TAG_MESSAGE);
                     } else {
-                        Log.d("Registration Failure!", json.getString(TAG_MESSAGE));
-                        return json.getString(TAG_MESSAGE);
+                        Log.d("Registration Failure!", json.getString(ApplicationConstants.TAG_MESSAGE));
+                        return json.getString(ApplicationConstants.TAG_MESSAGE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

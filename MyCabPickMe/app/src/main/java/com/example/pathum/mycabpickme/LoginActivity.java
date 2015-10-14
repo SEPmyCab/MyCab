@@ -1,11 +1,17 @@
 package com.example.pathum.mycabpickme;
-
+/**
+ * Created by Nu on 6/24/2015.
+ */
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +22,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,23 +41,72 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     private ProgressDialog pDialog;
 
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://blinkcab.host56.com/myCab2/plogin.php";
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
+
+    GoogleCloudMessaging gcmObj;
+    Context applicationContext;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_login);
         btnlog=(Button)findViewById(R.id.B_login);
         emailField = (EditText)findViewById(R.id.ET_email);
         passwordField = (EditText)findViewById(R.id.ET_Password);
+        if(isNetworkAvailable()==false)
+        {
+            createNetErrorDialog();
+
+        }
+        applicationContext = getApplicationContext();
 
 
 
 
         getSupportActionBar().hide();
+    }
+    protected void createNetErrorDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You need a network connection to use this application. Please turn on mobile network or Wi-Fi in Settings.")
+                .setTitle("Unable to connect")
+                .setCancelable(false)
+                .setPositiveButton("Settings",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent i = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                startActivity(i);
+                            }
+                        }
+                )
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                LoginActivity.this.finish();
+                            }
+                        }
+                );
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    private boolean isNetworkAvailable() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 
 
@@ -91,6 +149,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 .show();
     }
 
+
     class PassengerrLogin extends AsyncTask<String, String, String> {
 
 
@@ -128,10 +187,21 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             int success;
 
             String username = emailField.getText().toString();
-
+            String regId = "";
 
             String password = passwordField.getText().toString();
+            String msg = "";
+            try {
+                if (gcmObj == null) {
+                    gcmObj = GoogleCloudMessaging
+                            .getInstance(applicationContext);
+                }
+                regId = gcmObj.register(ApplicationConstants.GOOGLE_PROJ_ID);
+                msg = "Registration ID :" + regId;
 
+            } catch (IOException ex) {
+                msg = "Error :" + ex.getMessage();
+            }
             try {
 
 
@@ -141,12 +211,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 params.add(new BasicNameValuePair("email", username));
 
                 params.add(new BasicNameValuePair("password", password));
-
+                params.add(new BasicNameValuePair("regId",regId));
                 Log.d("request!", "starting");
 
 
 
-                JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest(ApplicationConstants.LOGIN_URL, "POST", params);
 
 
 
@@ -154,7 +224,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
 
-                success = json.getInt(TAG_SUCCESS);
+                success = json.getInt(ApplicationConstants.TAG_SUCCESS);
 
                 if (success == 1) {
 
@@ -163,7 +233,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     SharedPreferences.Editor editor = pref.edit();
 
                     editor.putString("email", json.getString("email"));
-
+                    editor.putString("fname", json.getString("fname"));
                     editor.commit();
 
                     Intent i = new Intent(LoginActivity.this, MapsActivity.class);
@@ -173,13 +243,13 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                     startActivity(i);
 
-                    return json.getString(TAG_MESSAGE);
+                    return json.getString(ApplicationConstants.TAG_MESSAGE);
 
                 }else{
 
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                    Log.d("Login Failure!", json.getString(ApplicationConstants.TAG_MESSAGE));
 
-                    return json.getString(TAG_MESSAGE);
+                    return json.getString(ApplicationConstants.TAG_MESSAGE);
 
                 }
 

@@ -137,6 +137,7 @@ public class JSONParser {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
 
                 HttpPost httpPost = new HttpPost(url);
+                httpPost.setHeader("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
 
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
 

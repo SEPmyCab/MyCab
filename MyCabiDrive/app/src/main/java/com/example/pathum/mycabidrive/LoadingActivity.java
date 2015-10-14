@@ -59,7 +59,7 @@ public class LoadingActivity extends ActionBarActivity implements View.OnClickLi
     public void onClick(View v) {
         SharedPreferences mySharedPreferences ;
         mySharedPreferences=getSharedPreferences("MyPref",0);
-        String mString= mySharedPreferences.getString("user_name","");
+        String mString= mySharedPreferences.getString("uname","");
 
         if(mString!="") {
               Intent intent = new Intent(this,MainActivity.class);

@@ -1,5 +1,6 @@
 package com.example.pathum.mycabidrive;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
@@ -9,11 +10,15 @@ import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -23,6 +28,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.loopj.android.http.RequestParams;
 
 
 public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
@@ -42,12 +50,28 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     public static String dbphone;
     public static String dbpassword;
 
+    public LoginActivity(){}
+    RequestParams params1 = new RequestParams();
+    GoogleCloudMessaging gcmObj;
+    Context applicationContext;
+    String regId = "";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    AsyncTask<Void, Void, String> createRegIdTask;
+
+    public static final String REG_ID = "regId";
+    public static final String EMAIL_ID = "emailId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(isNetworkAvailable()==false)
+        {
+            createNetErrorDialog();
+
+        }
+        applicationContext = getApplicationContext();
         usernameField = (EditText)findViewById(R.id.ET_UserName);
         passwordField = (EditText)findViewById(R.id.ET_Password);
         forgotpassword= (Button) findViewById(R.id.B_forgotPassword);
@@ -55,6 +79,47 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         btnlog.setOnClickListener(this);
         getSupportActionBar().hide();
 
+    }
+    protected void createNetErrorDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You need a network connection to use this application. Please turn on mobile network or Wi-Fi in Settings.")
+                .setTitle("Unable to connect")
+                .setCancelable(false)
+                .setPositiveButton("Settings",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent i = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                startActivity(i);
+                            }
+                        }
+                )
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                LoginActivity.this.finish();
+                            }
+                        }
+                );
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    private boolean isNetworkAvailable() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
     class DriverLogin extends AsyncTask<String, String, String> {
 
@@ -96,7 +161,18 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
             String password = passwordField.getText().toString();
+            String msg = "";
+            try {
+                if (gcmObj == null) {
+                    gcmObj = GoogleCloudMessaging
+                            .getInstance(applicationContext);
+                }
+                regId = gcmObj.register(ApplicationConstants.GOOGLE_PROJ_ID);
+                msg = "Registration ID :" + regId;
 
+            } catch (IOException ex) {
+                msg = "Error :" + ex.getMessage();
+            }
             try {
 
 
@@ -106,7 +182,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 params.add(new BasicNameValuePair("username", username));
 
                 params.add(new BasicNameValuePair("password", password));
-
+                params.add(new BasicNameValuePair("regId",regId));
                 Log.d("request!", "starting");
 
 
@@ -130,12 +206,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
                     SharedPreferences.Editor editor = pref.edit();
 
-                    editor.putString("user_name", dbuname);
+                    editor.putString("uname", dbuname);
                     editor.putString("nic",dbnic);
                     editor.commit();
 
 
-                    Intent i = new Intent(LoginActivity.this, Availability.class);
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
 
                     //i.putExtra("User Name",dbuname);

@@ -23,6 +23,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -35,8 +38,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class availabilityActivity extends ActionBarActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener{
-    //  private GoogleApiClient mGoogleApiClient;
+public class availabilityActivity extends ActionBarActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener, com.google.android.gms.location.LocationListener{
+      //private GoogleApiClient mGoogleApiClient;
     String Availablity;
     Double latitude=0.00;
     Double longitiude=0.00;
@@ -70,7 +73,7 @@ public class availabilityActivity extends ActionBarActivity implements View.OnCl
     MyTimerTask myTimerTask=new MyTimerTask();
 
 
-    // private LocationRequest mLocationRequest;
+     private LocationRequest mLocationRequest;
 
 
 
@@ -98,10 +101,11 @@ public class availabilityActivity extends ActionBarActivity implements View.OnCl
 //                .addOnConnectionFailedListener(this)
 //                .addApi(LocationServices.API)
 //                .build();
-//        mLocationRequest = LocationRequest.create()
-//                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-//                .setFastestInterval(1 * 1000);
+
+       mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setFastestInterval(1 * 1000);
 //        driverID=i.getStringExtra("userID");
       vehicle=new ArrayList<Vehicle>();
     selectVehicalSpinner.setOnItemSelectedListener(this);
@@ -117,6 +121,11 @@ public class availabilityActivity extends ActionBarActivity implements View.OnCl
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
 
     }
 
@@ -359,9 +368,10 @@ public class availabilityActivity extends ActionBarActivity implements View.OnCl
 
 public void calllocationUpdate(View v){
 locationUpdate obj=new locationUpdate();
+
     obj.onLocationChanged(location);
 }
-    private void populateSpinner() {
+private void populateSpinner() {
         List<String> lables = new ArrayList<String>();
 
 
@@ -389,12 +399,13 @@ public class locationUpdate implements LocationListener{
     public void onLocationChanged(Location location) {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, this);
-
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         try {
             latitude = location.getLatitude();
             longitiude = location.getLongitude();
+            Log.d("Lat",latitude.toString());
 
-
+            Log.d("Long",longitiude.toString());
             System.out.println("");
         }catch (Exception e){
             System.out.println(e);
@@ -429,6 +440,9 @@ public class locationUpdate implements LocationListener{
             values.add(new BasicNameValuePair("Availability", ""+Availablity));
             values.add(new BasicNameValuePair("latitude", ""+latitude));
             values.add(new BasicNameValuePair("longitiude", ""+longitiude));
+            Log.d("Lat",latitude.toString());
+
+            Log.d("Long",longitiude.toString());
             values.add(new BasicNameValuePair("userName", userName));
             values.add(new BasicNameValuePair("selectedVehical", selectedVehical));
             availabilityupdates.makeHttpRequest(UPDATE_AVAILABILITY_URL, "POST", values);

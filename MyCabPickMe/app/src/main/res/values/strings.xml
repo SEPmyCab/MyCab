@@ -8,4 +8,18 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_driver">DriverActivity</string>
+    <string-array name="vehicle_array">
+        <item>car</item>
+        <item>van</item>
+        <item>three wheeler</item>
+      <!--  <item>bus</item>
+        <item>truck</item>-->
+    </string-array>
+    <string name="title_activity_alert">AlertActivity</string>
+
+    <string name="REQUEST_URL">http://blinkcab.host56.com/myCab2/passengerRequest.php?push=true</string>
+    <string name="title_activity_error">ErrorActivity</string>
+    <string name="title_activity_hire">HireActivity</string>
+    private static final String NOTIFY_URL = "http://blinkcab.host56.com/myCab2/selectDriver.php?push=true";
 </resources>

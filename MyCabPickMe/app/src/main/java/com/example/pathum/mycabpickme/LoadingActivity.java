@@ -1,3 +1,6 @@
+/**
+ * Created by Nu on 6/24/2015.
+ */
 package com.example.pathum.mycabpickme;
 
 import android.app.AlertDialog;
@@ -19,6 +22,7 @@ public class LoadingActivity extends ActionBarActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_loading);
 
         getSupportActionBar().hide();

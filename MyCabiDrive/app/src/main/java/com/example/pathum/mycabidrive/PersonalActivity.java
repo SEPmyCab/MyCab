@@ -57,8 +57,8 @@ public class PersonalActivity extends ActionBarActivity implements View.OnClickL
 
 
     JSONParser jsonParser = new JSONParser();
-    private static final String FETCH_DRIVER_URL = "http://blinkcab.host56.com/myCab2/fetch_driver.php";
-    private static final String SAVE_DRIVER_URL = "http://blinkcab.host56.com/myCab2/save_driver.php";
+    private static final String FETCH_DRIVER_URL = "http://blinkcab.host56/myCab2/fetch_driver.php";
+    private static final String SAVE_DRIVER_URL = "http://blinkcab.host56/myCab2/save_driver.php";
     private static final String TAG_SUCCESS1 = "success";
     private static final String TAG_MESSAGE1 = "message";
     private static final String TAG_SUCCESS = "success";

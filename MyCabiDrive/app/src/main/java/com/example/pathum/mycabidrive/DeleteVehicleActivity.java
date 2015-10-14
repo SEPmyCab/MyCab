@@ -29,7 +29,7 @@ EditText regno;
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
 
-    private static final String DELETE_VEHICLE_URL = "http://blinkcab.host56.com/myCab2/delete_vehicle.php";
+    private static final String DELETE_VEHICLE_URL = "http://blinkcab.host56/myCab2/delete_vehicle.php";
     private static final String TAG_SUCCESS= "success";
     private static final String TAG_MESSAGE= "message";
     @Override
