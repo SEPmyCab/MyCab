@@ -86,10 +86,6 @@
             android:name=".ErrorActivity"
             android:label="@string/title_activity_error" >
         </activity>
-        <activity
-            android:name=".HireActivity"
-            android:label="@string/title_activity_hire" >
-        </activity>
     </application>
 
 </manifest>

@@ -97,9 +97,8 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
 
     private ProgressDialog pDialog;
 
-    Marker pick,des,pass;
+    Marker pick,des;
     String pickcode,destcode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -383,7 +382,7 @@ catch (IndexOutOfBoundsException e)
 
     @Override
     public void onLocationChanged(Location location) {
-        //handleNewLocation(location);
+        handleNewLocation(location);
     }
 
     @Override

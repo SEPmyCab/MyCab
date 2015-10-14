@@ -238,11 +238,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
                 startActivity(i);
                 break;
-            case(R.id.btnHires):
-                Intent j = new Intent(MapsActivity.this, HireActivity.class);
-
-                startActivity(j);
-                break;
         }
     }
 

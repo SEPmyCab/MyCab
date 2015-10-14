@@ -20,6 +20,5 @@
 
     <string name="REQUEST_URL">http://blinkcab.host56.com/myCab2/passengerRequest.php?push=true</string>
     <string name="title_activity_error">ErrorActivity</string>
-    <string name="title_activity_hire">HireActivity</string>
     private static final String NOTIFY_URL = "http://blinkcab.host56.com/myCab2/selectDriver.php?push=true";
 </resources>
