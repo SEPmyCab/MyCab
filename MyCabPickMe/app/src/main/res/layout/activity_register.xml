@@ -163,7 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Phone Number(Optional)"
+                android:text="Phone Number"
                 android:id="@+id/TV_phoneNo"
                 android:layout_below="@+id/ET_ConPassword"
                 android:layout_marginTop="10dp"
@@ -195,6 +195,19 @@
                 android:layout_below="@+id/ET_PhoneNo"
                 android:layout_marginTop="20dp"
                 android:layout_centerVertical="true" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Back to login"
+                android:id="@+id/B_registerGoBack"
+                android:background="@color/darkBlue"
+                android:textColor="@color/white"
+                android:onClick="onClick"
+                android:layout_below="@+id/B_register"
+                android:layout_marginTop="40dp"
+                android:layout_centerVertical="true" />
+
 
 
 

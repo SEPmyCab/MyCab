@@ -34,60 +34,59 @@ import java.util.List;
 
 public class AlertActivity extends ActionBarActivity implements View.OnClickListener{
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
     TextView msgET, usertitleET;
-
-
-
-
+    Button start;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+       // Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_alert);
-
         // Intent Message sent from Broadcast Receiver
         String str = getIntent().getStringExtra("msg");
-
-        // Get Email ID from Shared preferences
-        SharedPreferences prefs = getSharedPreferences("MyPrefs",
-                Context.MODE_PRIVATE);
-        String fname = prefs.getString("fname", "");
+        // Get first Name from Shared preferences
+        SharedPreferences prefs = getSharedPreferences("MyPrefs",Context.MODE_PRIVATE);
+        String fName = prefs.getString("fname", "");
         // Set Title
         usertitleET = (TextView) findViewById(R.id.usertitle);
-
+        start=(Button)findViewById(R.id.buttonStart);
         // Check if Google Play Service is installed in Device
-
         if (!checkPlayServices()) {
             Toast.makeText(
                     getApplicationContext(),
                     "This device doesn't support Play services, App will not work normally",
                     Toast.LENGTH_LONG).show();
         }
-
-        usertitleET.setText("Hello " + fname + " !");
-
+        usertitleET.setText("Hello " + fName + " !");
         if (str != null) {
-            // Set the message
+            // Set the message received from server in the TextView
             msgET = (TextView) findViewById(R.id.message);
             Log.e("string",str);
-
             msgET.setText(str);
 
-        }
+            if(str.startsWith("No"))
+            {
+                start.setVisibility(View.GONE);
+            }
 
+
+
+        }
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent m = new Intent(AlertActivity.this, startHire.class);
+                startActivity(m);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId())
         {
-
-
         }
-
     }
 
 
@@ -97,31 +96,40 @@ public class AlertActivity extends ActionBarActivity implements View.OnClickList
 
     /**
      * check if the device support play services
-     * @return
+     * @return boolean
      */
     private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(this);
-        // When Play services not found in device
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                // Show Error dialog to install Play serviceskl
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+        try {
+            int resultCode = GooglePlayServicesUtil
+                    .isGooglePlayServicesAvailable(this);
+            // When Play services not found in device
+            if (resultCode != ConnectionResult.SUCCESS) {
+                if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                    // Show Error dialog to install Play serviceskl
+                    GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "This device doesn't support Play services, App will not work normally",
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                return false;
             } else {
                 Toast.makeText(
                         getApplicationContext(),
-                        "This device doesn't support Play services, App will not work normally",
+                        "This device supports Play services, App will work normally",
                         Toast.LENGTH_LONG).show();
-                finish();
             }
-            return false;
-        } else {
+            return true;
+        } catch (Exception e) {
             Toast.makeText(
                     getApplicationContext(),
-                    "This device supports Play services, App will work normally",
+                    "Error Occurred with location services!",
                     Toast.LENGTH_LONG).show();
+            return  false;
         }
-        return true;
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

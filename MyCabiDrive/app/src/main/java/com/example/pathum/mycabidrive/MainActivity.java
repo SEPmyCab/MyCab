@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 private TextView welcome;
+    String user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,8 @@ private TextView welcome;
         String mString= mySharedPreferences.getString("user_name","");
        // Bundle b=getIntent().getExtras();
         //String keepusername=b.getString("User Name");
+        Intent intent = getIntent();
+        user= intent.getStringExtra("userID");
         welcome.setText("Welcome "+mString);
 
     }
@@ -71,6 +74,11 @@ private TextView welcome;
             case R.id.B_Delete:
                 Intent l = new Intent(MainActivity.this, DeleteVehicleActivity.class);
                 startActivity(l);
+                break;
+            case R.id.B_cancelHire:
+                Intent t = new Intent(MainActivity.this, availableHires.class);
+                t.putExtra("user",user);
+                startActivity(t);
                 break;
         }
     }

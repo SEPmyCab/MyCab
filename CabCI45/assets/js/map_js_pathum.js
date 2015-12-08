@@ -43,12 +43,12 @@
 		map.setCenter( latlng );
 		
 		// Set the zoom level according to the address level of detail the user specified
-		var zoom = 14;
+		var zoom = 16;
 		switch ( addr_type )
 		{
-		case "administrative_area_level_1"	: zoom = 9; break;		// user specified a state
-		case "locality"						: zoom = 12; break;		// user specified a city/town
-		case "street_address"				: zoom = 17; break;		// user specified a street address
+		case "administrative_area_level_1"	: zoom = 13; break;		// user specified a state
+		case "locality"				: zoom = 14; break;		// user specified a city/town
+		case "street_address"			: zoom = 10; break;		// user specified a street address
 		}
 		map.setZoom( zoom );
 	

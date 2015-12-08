@@ -21,6 +21,10 @@ public class GCMNotificationIntentService extends IntentService {
         super("GcmIntentService");
     }
 
+    /**
+     *
+     * @param intent
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
@@ -46,6 +50,10 @@ public class GCMNotificationIntentService extends IntentService {
        GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
+    /**
+     * Send notification to Alert Activity
+     * @param msg
+     */
     private void sendNotification(String msg) {
         Intent resultIntent = new Intent(this, AlertActivity.class);
         resultIntent.putExtra("msg", msg);

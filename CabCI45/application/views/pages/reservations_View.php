@@ -28,7 +28,6 @@
 		<table class="table table-striped table-bordered table-advance table-hover">
                     <thead>
 			<tr>
-                            <th></i>&nbsp;&nbsp; <b>ID</b> </th>
                             <th><i class="glyphicon glyphicon-user"></i>&nbsp; <b>Passenger</b> </th>
                             <th><img src="assets/images/ic_marker_green.png" height="20" width="12">&nbsp; <b>Pickup Location</b> </th>
                             <th><img src="assets/images/ic_marker_red.png" height="20" width="12">&nbsp; <b>Drop Location</b> </th>
@@ -46,7 +45,7 @@
                         foreach($dt as $details)
                         {?>
 			<tr>
-                            <td class="highlight"><div class="success"></div>
+                            <td class="highlight" hidden="true"><div class="success"></div>
                                 &nbsp;&nbsp; 
                                 <?php echo $details->reserved_id;?></td>
                             <td><?php echo $details->passenger;?></td>

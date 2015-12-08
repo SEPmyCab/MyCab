@@ -34,8 +34,8 @@ public class AlertActivity extends ActionBarActivity implements View.OnClickList
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     TextView msgET, usertitleET;
     JSONParser jsonParser = new JSONParser();
-    private static final String NOTIFY_URL = "http://blinkcab.host56/myCab2/notifyPassenger.php?push=true";
-    private static final String DECLINE_URL = "http://blinkcab.host56/myCab2/DeclineAndSelectNextDriver.php?push=true";
+    private static final String NOTIFY_URL = "http://cabeelk.com/myCab2/notifyPassenger.php?push=true";
+    private static final String DECLINE_URL = "http://cabeelk.com/myCab2/DeclineAndSelectNextDriver.php?push=true";
     private ProgressDialog pDialog;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";

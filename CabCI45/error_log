@@ -1,0 +1,5 @@
+[08-Dec-2015 08:04:21 America/New_York] PHP Fatal error:  Call to undefined function error() in /home/cabeelkc/public_html/CabCI45/application/controllers/vehicle_controller.php on line 39
+[08-Dec-2015 08:04:29 America/New_York] PHP Fatal error:  Call to undefined function error() in /home/cabeelkc/public_html/CabCI45/application/controllers/vehicle_controller.php on line 39
+[08-Dec-2015 08:09:31 America/New_York] PHP Fatal error:  Call to undefined function error() in /home/cabeelkc/public_html/CabCI45/application/controllers/vehicle_controller.php on line 39
+[08-Dec-2015 08:16:09 America/New_York] PHP Fatal error:  Call to undefined function mysql_connect_errno() in /home/cabeelkc/public_html/CabCI45/application/controllers/vehicle_controller.php on line 67
+[08-Dec-2015 08:18:52 America/New_York] PHP Fatal error:  Call to undefined function error() in /home/cabeelkc/public_html/CabCI45/application/controllers/vehicle_controller.php on line 39

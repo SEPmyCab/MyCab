@@ -5,10 +5,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Select a driver from the map</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_driver">DriverActivity</string>
+    <string name="title_activity_driver">Book Now</string>
+    <string name="title_activity_favourite_list">Book Now</string>
+    <string name="title_activity_edit_favourites">Book Now</string>
+    <string name="Edit">Edit</string>
+    <string name="Delete">Delete</string>
+    <string name="Request">Request</string>
+    <string name="Cancel">Cancel</string>
     <string-array name="vehicle_array">
         <item>car</item>
         <item>van</item>
@@ -20,5 +26,26 @@
 
     <string name="REQUEST_URL">http://blinkcab.host56.com/myCab2/passengerRequest.php?push=true</string>
     <string name="title_activity_error">ErrorActivity</string>
-    private static final String NOTIFY_URL = "http://blinkcab.host56.com/myCab2/selectDriver.php?push=true";
+    <string name="title_activity_hire">My Trips</string>
+    <string-array name="navigation_drawer_items_array">
+        <item>Book Now</item>
+        <item>My Trips</item>
+        <item>Profile</item>
+        <item>Favourites</item>
+    </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="title_activity_update_user_profile">UpdateUserProfile</string>
+    <string name="title_activity_update_passenger_profile">UpdatePassengerProfile</string>
+    <string name="title_activity_view_driver_profile">ViewDriverProfile</string>
+    <string name="title_activity_view_passenger">ViewPassenger</string>
+    <string name="title_activity_report_drivers">reportDrivers</string>
+    <string name="title_activity_report">Report</string>
+    <string name="title_activity_rate_drivers">RateDrivers</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="title_activity_start_map">start_map</string>
 </resources>

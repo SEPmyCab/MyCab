@@ -1,0 +1,143 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.pathum.mycabpickme.RegisterActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/SV_register"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:id="@+id/IV_MyCabLogo"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/my_cab_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="REPORT DRIVERS"
+                android:id="@+id/TV_pleaseRegister"
+                android:layout_below="@+id/IV_MyCabLogo"
+                android:layout_centerHorizontal="true"
+                android:textColor="#2A679E" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/RadioGrp"
+                android:layout_marginTop="125dp"
+                android:layout_marginBottom="125dp">
+
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Illegal street racing"
+                    android:id="@+id/rdo_DrSpd"
+                    android:checked="true"
+                    android:onClick="onClick"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Travelling at high speeds"
+                    android:id="@+id/rdo_TrHiSpd"
+                    android:checked="false"
+                    android:onClick="onClick"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Burnout offences"
+                    android:id="@+id/rdo_Offence"
+                    android:checked="false"
+                    android:onClick="onClick"/>
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Playing loud music from car stereos"
+                    android:id="@+id/rdo_PlLoMu"
+                    android:checked="false"
+                    android:onClick="onClick"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Speed boat hooning"
+                    android:id="@+id/rdo_ChHor"
+                    android:checked="false"
+                    android:onClick="onClick"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Drunk driving"
+                    android:id="@+id/rdo_DnkDr"
+                    android:checked="false"
+                    android:onClick="onClick"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:id="@+id/rdo_Othr"
+                    android:checked="false"
+                    android:onClick="onClick"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comment"
+                    android:id="@+id/textView15"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/radioButton7"/>
+                <EditText
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ET_comments"
+                    android:textSize="36px"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textView14"/>
+
+                <Button
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:text="REPORT"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/editText2"
+                    android:id="@+id/btn_Report"
+                    android:onClick="onClick"/>
+                <Button
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:text="CANCEL"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/editText2"
+                    android:id="@+id/btn_cancel"
+                    android:onClick="onClick"/>
+            </RadioGroup>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

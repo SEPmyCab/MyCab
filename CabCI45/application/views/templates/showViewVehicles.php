@@ -1,0 +1,1 @@
+<li ><a href="index.php/vehicle_controller/getVehicles"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> View Vehicles</a></li>

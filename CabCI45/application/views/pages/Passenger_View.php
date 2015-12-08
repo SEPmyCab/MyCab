@@ -16,11 +16,11 @@
     <table class="table table-bordered table-hover" width="100%" align = "center">
         <thead>
         <tr>
-            <th><strong>Passenger ID</strong></th>
-            <th><strong>Email</strong></th>
-            <th><strong>Phone No</strong></th>
-            <th><strong>Last Name</strong></th>
-            <th><strong>First Name</strong></th>
+            <th><strong><i class="glyphicon glyphicon-credit-card"></i>&nbsp; Passenger ID</strong></th>
+            <th><strong><i class="glyphicon glyphicon-envelope"></i>&nbsp; Email</strong></th>
+            <th><strong><i class="glyphicon glyphicon-phone"></i>&nbsp; Phone No</strong></th>
+            <th><strong><i class="glyphicon glyphicon-user"></i>&nbsp; Last Name</strong></th>
+            <th><strong><i class="glyphicon glyphicon-user"></i>&nbsp; First Name</strong></th>
         </tr>
         </thead>
         

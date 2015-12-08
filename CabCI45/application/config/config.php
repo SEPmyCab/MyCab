@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:8080/CabCI45/';
+$config['base_url']	= 'http://cabeelk.com/CabCI45/';
 
 /*
 |--------------------------------------------------------------------------

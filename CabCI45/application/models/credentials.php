@@ -1,9 +1,9 @@
-<?php
-
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mycab2";
-?>
-
+<?php
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "mycab2";
+?>
+

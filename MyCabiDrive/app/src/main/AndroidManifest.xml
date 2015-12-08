@@ -79,6 +79,14 @@
             android:name=".AlertActivity"
             android:label="@string/title_activity_alert" >
         </activity>
+        <activity
+            android:name=".availableHires"
+            android:label="@string/title_activity_alert" >
+        </activity>
+        <activity
+            android:name=".deletehire"
+            android:label="@string/title_activity_alert" >
+        </activity>
         <receiver
             android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >

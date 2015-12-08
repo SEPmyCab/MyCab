@@ -31,8 +31,7 @@
                                     <li><a href="index.php/getlocation_carsShow">Car</a></li>
                                   <li><a href="index.php/getlocation_vansShow">Van</a></li>
                                   <li><a href="index.php/getlocation_three_wheelersShow">Three Wheeler</a></li>
-                                  <li><a href="index.php/getlocation_bussesShow">Bus</a></li>
-                                  <li><a href="index.php/getlocation_trucksShow">Truck</a></li>
+                                  
                                 </ul>
                         </li>
                         <form class="navbar-form navbar-left" role="search">
@@ -82,6 +81,9 @@
         
 <p>
  
+<video width="100%" controls>
+  <source src="assets/videos/Mycab.mp4" type="video/mp4">
+</video>
 ICT King/Biz Care offer world-class custom software development, software testing,
                 quality assurance and business technology optimization services. This project is focused on
                 designing and developing a GPS based Online Cab Booking System - My Cab.
@@ -194,7 +196,7 @@ urchinTracker();
 <script src="http://maps.google.com/maps/api/js?v=3&sensor=false" type="text/javascript"></script>
 <script type ="text/javascript" src="http://www.geocodezip.com/scripts/v3_epoly.js"></script>
 </body>
-<!--?php require 'getlocation.php';?-->
+<?php require 'getlocation.php';?>
 </body>
 </html> 
         

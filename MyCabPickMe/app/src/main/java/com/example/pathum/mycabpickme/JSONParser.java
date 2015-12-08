@@ -25,19 +25,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class JSONParser {
-
     static InputStream is = null;
-
     static JSONObject jObj = null;
-
     static String json = "";
 
-
-
-
-
     public JSONParser() {
-
     }
 
     /**
@@ -46,85 +38,39 @@ public class JSONParser {
      * @return json object with attributes parsed from server
      */
     public JSONObject getJSONFromUrl(String url) {
-
-
-
         try {
-
-
-
             DefaultHttpClient httpClient = new DefaultHttpClient();
-
             HttpPost httpPost = new HttpPost(url);
-
-
-
             HttpResponse httpResponse = httpClient.execute(httpPost);
-
             HttpEntity httpEntity = httpResponse.getEntity();
-
             is = httpEntity.getContent();
-
-
-
         } catch (UnsupportedEncodingException e) {
-
             e.printStackTrace();
-
         } catch (ClientProtocolException e) {
-
             e.printStackTrace();
-
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
 
         try {
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-
-                    is, "iso-8859-1"), 8);
-
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
             StringBuilder sb = new StringBuilder();
-
             String line = null;
-
             while ((line = reader.readLine()) != null) {
-
                 sb.append(line + "\n");
-
             }
-
             is.close();
-
             json = sb.toString();
-
         } catch (Exception e) {
-
             Log.e("Buffer Error", "Error converting result " + e.toString());
-
         }
-
-
 
         try {
-
             jObj = new JSONObject(json);
-
         } catch (JSONException e) {
-
             Log.e("JSON Parser", "Error parsing data " + e.toString());
-
         }
-
-
-
         return jObj;
-
-
-
     }
 
     /**
@@ -133,103 +79,58 @@ public class JSONParser {
      * @param method post/get
      * @param params parameters that has to be passed to the server
      * @return json object with attributes parsed from server
+     * @exception UnsupportedEncodingException
+     * @exception ClientProtocolException
+     * @exception IOException
+     * @exception JSONException
      */
     public JSONObject makeHttpRequest(String url, String method,List<NameValuePair> params) {
-
-
-
         try {
-
-
-
             if(method == "POST"){
-
-
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setHeader("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
-
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
-
                 HttpResponse httpResponse = httpClient.execute(httpPost);
-
                 HttpEntity httpEntity = httpResponse.getEntity();
-
                 is = httpEntity.getContent();
-
             }else if(method == "GET"){
-
-
-
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-
                 String paramString = URLEncodedUtils.format(params, "utf-8");
-
                 url += "?" + paramString;
-
                 HttpGet httpGet = new HttpGet(url);
-
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-
                 HttpEntity httpEntity = httpResponse.getEntity();
-
                 is = httpEntity.getContent();
-
             }
-
         } catch (UnsupportedEncodingException e) {
-
             e.printStackTrace();
-
         } catch (ClientProtocolException e) {
-
             e.printStackTrace();
-
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
 
+
         try {
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-
             StringBuilder sb = new StringBuilder();
-
             String line = null;
-
             while ((line = reader.readLine()) != null) {
-
                 sb.append(line + "\n");
-
             }
-
             is.close();
            Log.e("passed string",sb.toString());
             json = sb.toString();
-
         } catch (Exception e) {
-
             Log.e("Buffer Error", "Error converting result " + e.toString());
-
         }
-
-
 
         try {
-
             jObj = new JSONObject(json);
-
         } catch (JSONException e) {
-
             Log.e("JSON Parser", "Error parsing data " + e.toString());
-
         }
-
-
-
         return jObj;
     }
 

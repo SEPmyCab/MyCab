@@ -2,7 +2,12 @@ package com.example.pathum.mycabpickme;
 /**
  * Created by Nu on 7/11/2015.
  */
+import android.app.ActionBar;
 import android.app.AlertDialog;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -12,12 +17,25 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
+import android.provider.Settings;
+
+
 import android.os.Bundle;
+
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -50,7 +68,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener,View.OnClickListener {
+public class MapsActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener,View.OnClickListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -59,13 +77,66 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
     private LocationRequest mLocationRequest;
 
     HashMap<String, HashMap> extraMarkerInfo = new HashMap<String, HashMap>();
-
+    //////////////////////////////////////////////////////////////////////////////////////
+    private String[] mNavigationDrawerItemTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+       // Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_maps);
+        ////////////////////////////
+        mTitle = mDrawerTitle = getTitle();
+        mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[4];
+
+        drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_home, "Book Now");
+        drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_trip, "My Trips");
+        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_profile, "Profile");
+        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_heart, "Favourites");
+        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.listview_item_row, drawerItem);
+        mDrawerList.setAdapter(adapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle(mDrawerTitle);
+                mDrawerList.bringToFront();
+                mDrawerLayout.requestLayout();
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        /////////////////////////////
+        if(!isNetworkAvailable())
+        {
+            createNetErrorDialog();
+
+        }
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -88,7 +159,68 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         new RetrieveTask().execute();
 
     }
+///////////////////////////////////
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+    //////////////////////////////////////
+    protected void createNetErrorDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("You need a network connection to use this application. Please turn on mobile network or Wi-Fi in Settings.")
+                .setTitle("Unable to connect")
+                .setCancelable(false)
+                .setPositiveButton("Settings",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent i = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                startActivity(i);
+                            }
+                        }
+                )
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                MapsActivity.this.finish();
+                            }
+                        }
+                );
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    private boolean isNetworkAvailable() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
     /**
      * Shows an alert if gps is disabled
      */
@@ -238,6 +370,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
                 startActivity(i);
                 break;
+
         }
     }
 
@@ -318,7 +451,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                     @Override
                     public View getInfoWindow(Marker marker) {
                         HashMap<String, String> marker_data = extraMarkerInfo.get(marker.getId());
-                        String url="http://mycab.hostingsiteforfree.com/CabCI452/"+marker_data.get("Photo");
+//                        String url="http://mycab.hostingsiteforfree.com/CabCI452/"+marker_data.get("Photo");
                         View v=getLayoutInflater().inflate(R.layout.info_window, null);
                         ImageView Image=(ImageView)v.findViewById(R.id.IV_Driver);
 /*
@@ -341,13 +474,20 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                         TextView tvphone = (TextView) v.findViewById(R.id.tv_phone);
                         TextView tvcer= (TextView) v.findViewById(R.id.tv_cer);
                         TextView tvvehicle= (TextView) v.findViewById(R.id.tv_vehicle);
-
+                        Button profile=(Button)v.findViewById(R.id.btnPro);
                         tvname.setText(marker_data.get("FName")+" "+marker_data.get("LName"));
                         tvphone.setText(marker_data.get("Phone"));
                         tvcer.setText(marker_data.get("Certification"));
                         tvvehicle.setText("Vehicle No:-"+marker_data.get("Vehicle_ID"));
+                        profile.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(MapsActivity.this, ViewDriverProfile.class);
+                                startActivity(i);
+                            }
+                        });
                      //   Image.setImageResource("http://unibook.byethost15.com/CabCI452/"+marker_data.get("Photo"));
-                        String url="http://mycab.hostingsiteforfree.com/CabCI452/"+marker_data.get("Photo");
+                        String url="http://cabeelk.com/CabCI45/"+marker_data.get("Photo");
 
                         Log.d("url",url);
                         new DownloadImageTask((ImageView) v.findViewById(R.id.IV_Driver))
@@ -404,7 +544,57 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         @Override
         public void onError() {}
     }
+////////////////////////////////
 
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
 
     }
+
+    private void selectItem(int position) {
+
+        Fragment fragment = null;
+
+        switch (position) {
+            case 0:
+                Intent i = new Intent(MapsActivity.this, RequestActivity.class);
+                startActivity(i);
+                break;
+            case 1:
+                Intent j = new Intent(MapsActivity.this, HireActivity.class);
+                startActivity(j);
+                break;
+            case 2:
+
+                Intent n = new Intent(MapsActivity.this, ViewPassenger.class);
+                startActivity(n);
+                break;
+            case 3:
+                Intent m = new Intent(MapsActivity.this, FavouriteList.class);
+                startActivity(m);
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            getSupportActionBar().setTitle(mNavigationDrawerItemTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+        } else {
+            Log.e("MapsActivity", "Error in creating fragment");
+        }
+    }
+    /////////////////////////////////
+    }
+
 

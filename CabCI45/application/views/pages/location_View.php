@@ -13,13 +13,13 @@
       
     <h2 align="center" style="color: darkblue">View Driver Location </h2><br>
      
-        <table class="table table-bordered table-hover" align = "center" >
+    <table class="table table-bordered table-hover" align = "center">
             <thead>
             <tr>
-                <th><strong>Driver's NIC</strong></th>
-                <th><strong>Vehicle No</strong></th>
-                <th><strong>Latitude</strong></th>
-                <th><strong>Longitude</strong></th>
+                <th><strong><i class="glyphicon glyphicon-credit-card"></i>&nbsp; Driver's NIC</strong></th>
+                <th><strong><i class="glyphicon glyphicon-info-sign"></i>&nbsp; Vehicle No</strong></th>
+                <th><strong><i class="glyphicon glyphicon-map-marker"></i>&nbsp; Latitude</strong></th>
+                <th><strong><i class="glyphicon glyphicon-map-marker"></i>&nbsp; Longitude</strong></th>
             </tr>
             </thead>
         
@@ -34,7 +34,8 @@
                 <td><b><i class="text-primary"><?php echo $details->Latitude;?></i></td>
                 <td><b><i class="text-primary"><?php echo $details->Longitude;?></i></td>
             
-                <td><a href ="http://maps.google.com/maps?z=12&t=m&q=loc:<?php echo $details->Latitude;?>+<?php echo $details->Longitude;?>">Get Location</a></td>
+                <td style="width: 10%"><a href ="http://maps.google.com/maps?z=12&t=m&q=loc:<?php echo $details->Latitude;?>+<?php echo $details->Longitude;?>" class="btn btn-info">
+                        <i class="glyphicon glyphicon-map-marker"></i>&nbsp; Get Location</a></td>
 
         <?php 
         }?> 

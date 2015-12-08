@@ -52,7 +52,7 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
 
     Button btnreg;
     JSONParser jsonParser = new JSONParser();
-    private static final String LOGIN_URL = "http://blinkcab.host56/myCab2/register.php";
+    private static final String LOGIN_URL = "http://cabeelk.com/myCab2/register.php";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
 

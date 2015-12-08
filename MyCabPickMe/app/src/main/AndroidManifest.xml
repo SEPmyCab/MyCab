@@ -86,6 +86,50 @@
             android:name=".ErrorActivity"
             android:label="@string/title_activity_error" >
         </activity>
+        <activity
+            android:name=".HireActivity"
+            android:label="@string/title_activity_hire" >
+        </activity>
+        <activity
+            android:name=".FavouriteList"
+            android:label="@string/title_activity_favourite_list" >
+        </activity>
+        <activity
+            android:name=".EditFavourites"
+            android:label="@string/title_activity_edit_favourites" >
+        </activity>
+        <activity
+            android:name=".UpdateUserProfile"
+            android:label="@string/title_activity_update_user_profile" >
+        </activity>
+        <activity
+            android:name=".ViewDriverProfile"
+            android:label="@string/title_activity_view_driver_profile" >
+        </activity>
+        <activity
+            android:name=".ViewPassenger"
+            android:label="@string/title_activity_view_passenger" >
+        </activity>
+        <activity
+            android:name=".validation.Report"
+            android:label="@string/title_activity_report" >
+        </activity>
+        <activity
+            android:name=".RateDrivers"
+            android:label="@string/title_activity_rate_drivers" >
+        </activity>
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:label="@string/title_activity_forget_password" >
+        </activity>
+        <activity
+            android:name=".startHire"
+            android:label="startHire" >
+        </activity>
+        <activity
+            android:name=".start_map"
+            android:label="@string/title_activity_start_map" >
+        </activity>
     </application>
 
 </manifest>

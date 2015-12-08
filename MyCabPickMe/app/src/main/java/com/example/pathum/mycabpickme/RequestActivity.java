@@ -2,8 +2,14 @@ package com.example.pathum.mycabpickme;
 /**
  * Created by Nu on 8/12/2015.
  */
+import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,8 +19,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,8 +33,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -89,7 +99,7 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
     SurfaceView sfvTrack;
     RelativeLayout rel;
     Button close,open;
-
+    DBHelper db=new DBHelper(this);
 
     public static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -97,24 +107,89 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
 
     private ProgressDialog pDialog;
 
-    Marker pick,des;
+    Marker pick,des,pass;
     String pickcode,destcode;
+    ////////////////////////////////////////////////////////////////////
+    /**
+     * Variables for navigation drawer
+     */
+    private String[] mNavigationDrawerItemTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    Favourites selectedFav;
+    String pickFromFav;
+    String desFromFav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+      //  Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_request);
-        getSupportActionBar().hide();
+        ////////////////////////////
+        mTitle = mDrawerTitle = getTitle();
+        mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[4];
+
+        drawerItem[0] = new ObjectDrawerItem(R.drawable.ic_home, "Book Now");
+        drawerItem[1] = new ObjectDrawerItem(R.drawable.ic_trip, "My Trips");
+        drawerItem[2] = new ObjectDrawerItem(R.drawable.ic_profile, "Profile");
+        drawerItem[3] = new ObjectDrawerItem(R.drawable.ic_heart, "Favourites");
+        DrawerItemCustomAdapter adapter1 = new DrawerItemCustomAdapter(this, R.layout.listview_item_row, drawerItem);
+        mDrawerList.setAdapter(adapter1);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle(mDrawerTitle);
+                mDrawerList.bringToFront();
+                mDrawerLayout.requestLayout();
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        /////////////////////////////
+
         sfvTrack = (SurfaceView)findViewById(R.id.surfaceView1);
         rel=(RelativeLayout)findViewById(R.id.rlrequest);
         autoCompViewPick = (AutoCompleteTextView) findViewById(R.id.et_pick);
+        autoCompViewDes = (AutoCompleteTextView) findViewById(R.id.et_dest);
         spType=(Spinner)findViewById(R.id.sp_type);
         close=(Button)findViewById(R.id.btnclose);
         open=(Button)findViewById(R.id.btnopen);
+
+        if(this.getIntent().hasExtra("id"))
+        {
+            pickFromFav=this.getIntent().getStringExtra("pick");
+            desFromFav=this.getIntent().getStringExtra("dest");
+            autoCompViewPick.setText(pickFromFav);
+            autoCompViewDes.setText(desFromFav);
+        }
         autoCompViewPick.setAdapter(new GooglePlacesAutocompleteAdapterPickup(this, R.layout.list_item));
         autoCompViewPick.setOnItemClickListener(this);
 
-        autoCompViewDes = (AutoCompleteTextView) findViewById(R.id.et_dest);
+
 
 
         autoCompViewDes.setAdapter(new GooglePlacesAutocompleteAdapterDestination(this, R.layout.list_item));
@@ -182,10 +257,73 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
 
         });
         mMap.setOnMarkerDragListener(this);
+        Button favourites=(Button) findViewById(R.id.btnFav);
+        favourites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(RequestActivity.this,FavouriteList.class);
 
+
+                //=================================================================================
+                final AlertDialog.Builder alert = new AlertDialog.Builder(RequestActivity.this);
+                final EditText input = new EditText(RequestActivity.this);
+                alert.setView(input);
+                alert.setTitle("Add To Favourites");
+                alert.setMessage("Enter Name for Favourite!!");
+                alert.setIcon(R.drawable.blue_favourite);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
+                        db.open();
+                        db.insertRecord(value, autoCompViewPick.getText().toString(), autoCompViewDes.getText().toString(), spType.getSelectedItem().toString());
+                        db.close();
+                        //intent.putExtra("fname",value);
+                        Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                        startActivity(intent);
+                        Intent intent=getIntent();
+                        int id=intent.getIntExtra("book",-1);
+                        Log.i("id", String.valueOf(id));
+                        selectedFav=db.getFavourite(id);
+
+                    }
+                });
+                alert.show();
+                //================================================================================
+                //startActivity(intent);
+
+            }
+        });
 
     }
+    ///////////////////////////////////
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+    //////////////////////////////////////
     @Override
     protected void onResume() {
         super.onResume();
@@ -235,20 +373,7 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onClick(View v) {
@@ -293,6 +418,13 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
             handleNewLocation(location);
         };
     }
+
+    /**
+     * This method plots a marker
+     * according to the current location of the
+     * passenger
+     * @param location current location of the passenger
+     */
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
 
@@ -307,6 +439,7 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
                 .rotation(0)
                 .position(latLng)
                 .title("I am here!");
+        mMap.clear();
         mMap.addMarker(options);
         float zoomlevel = 14;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomlevel));
@@ -318,15 +451,17 @@ public class RequestActivity extends ActionBarActivity implements GoogleApiClien
 
 
     }
+
+    /**
+     * Update map when new pickup location is given
+     * @param lat
+     * @param longi
+     */
     private void handleNewPickupLocation(double lat,double longi) {
-
-
-
-
         LatLng latLng = new LatLng(lat, longi);
-markerPoints.add(0,latLng);
+        markerPoints.add(0,latLng);
 
-pick.setPosition(latLng);
+        pick.setPosition(latLng);
         des.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.frompin));
         pick.setVisible(true);
         pickcode=pick.getPosition().latitude+","+pick.getPosition().longitude;
@@ -341,8 +476,14 @@ pick.setPosition(latLng);
         autoCompViewDes.setEnabled(true);
 
     }
+
+    /**
+     * Update map when new destination is given
+     * @param lat
+     * @param longi
+     */
     private void handleNewDestination(double lat,double longi) {
-try {
+    try {
 
     LatLng latLng = new LatLng(lat, longi);
     markerPoints.add(1, latLng);
@@ -382,7 +523,7 @@ catch (IndexOutOfBoundsException e)
 
     @Override
     public void onLocationChanged(Location location) {
-        handleNewLocation(location);
+        //handleNewLocation(location);
     }
 
     @Override
@@ -1121,29 +1262,17 @@ catch (IndexOutOfBoundsException e)
         HttpURLConnection urlConnection = null;
             try{
                 URL url = new URL(strUrl);
-
-
                 urlConnection = (HttpURLConnection) url.openConnection();
-
-
                 urlConnection.connect();
-
-
                 iStream = urlConnection.getInputStream();
-
                 BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
                 StringBuffer sb  = new StringBuffer();
-
                 String line = "";
                     while( ( line = br.readLine())  != null){
                      sb.append(line);
                     }
-
                 data = sb.toString();
-
                 br.close();
-
             }catch(Exception e){
                 Log.d("Exception while downloading url", e.toString());
             }finally{
@@ -1160,25 +1289,61 @@ catch (IndexOutOfBoundsException e)
      * @return url for google maps directions api with geo codes embedded
      */
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
-
         String str_origin = "origin="+origin.latitude+","+origin.longitude;
-
-
         String str_dest = "destination="+dest.latitude+","+dest.longitude;
-
-
         String sensor = "sensor=false";
-
-
         String parameters = str_origin+"&"+str_dest+"&"+sensor;
-
-
         String output = "json";
-
-
         String url = "https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters;
-
         return url;
     }
+    ////////////////////////////////
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+
+    }
+
+    private void selectItem(int position) {
+        Fragment fragment = null;
+
+        switch (position) {
+            case 0:
+                Intent i = new Intent(RequestActivity.this, RequestActivity.class);
+                startActivity(i);
+                break;
+            case 1:
+                Intent j = new Intent(RequestActivity.this, HireActivity.class);
+                startActivity(j);
+                break;
+            case 2:
+                Intent n = new Intent(RequestActivity.this, ViewPassenger.class);
+                startActivity(n);
+                break;
+            case 3:
+                Intent m = new Intent(RequestActivity.this, FavouriteList.class);
+                startActivity(m);
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            getSupportActionBar().setTitle(mNavigationDrawerItemTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+        } else {
+            Log.e("MapsActivity", "Error in creating fragment");
+        }
+    }
+    /////////////////////////////////
 
 }

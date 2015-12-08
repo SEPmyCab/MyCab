@@ -51,8 +51,8 @@ public class availabilityActivity extends ActionBarActivity implements View.OnCl
 
     Location location;
     JSONParser availabilityupdates=new JSONParser();
-    private static final String FETCH_VEHICLES_URL = "http://blinkcab.host56.com/myCab2/fetch_vehicles.php";
-    private static final String UPDATE_AVAILABILITY_URL="http://blinkcab.host56.com/myCab2/driverLocationUpdate2.php";
+    private static final String FETCH_VEHICLES_URL = "http://cabeelk.com/myCab2/fetch_vehicles.php";
+    private static final String UPDATE_AVAILABILITY_URL="http://cabeelk.com/myCab2/driverLocationUpdate2.php";
     private static final String TAG_SUCCESS= "success";
     private static final String TAG_MESSAGE= "message";
     private ArrayList<Vehicle> vehicle;
@@ -321,7 +321,7 @@ public class availabilityActivity extends ActionBarActivity implements View.OnCl
 
     public void setNotAvailable(View v){
 
-        Availablity="NotAvailable";
+        Availablity="NAvailable";
         myTimerTask.cancel();
         updateStatus updateNotAvail = new updateStatus();
         updateNotAvail.execute();
@@ -441,7 +441,6 @@ public class locationUpdate implements LocationListener{
             values.add(new BasicNameValuePair("latitude", ""+latitude));
             values.add(new BasicNameValuePair("longitiude", ""+longitiude));
             Log.d("Lat",latitude.toString());
-
             Log.d("Long",longitiude.toString());
             values.add(new BasicNameValuePair("userName", userName));
             values.add(new BasicNameValuePair("selectedVehical", selectedVehical));

@@ -28,9 +28,7 @@ public class ErrorActivity extends ActionBarActivity implements View.OnClickList
         Intent intent = getIntent();
         TVerror.setText(intent.getExtras().getString("errmsg"));
         errDetail=intent.getExtras().getString("error");
-
         TV_Details=(TextView)findViewById(R.id.tv_errDetails);
-
 
     }
 

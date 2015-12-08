@@ -51,9 +51,9 @@ public class VehicleActivity extends ActionBarActivity implements AdapterView.On
 EditText rno;
 
     JSONParser jsonParser = new JSONParser();
-    private static final String FETCH_VEHICLE_DETAILS_URL = "http://blinkcab.host56/myCab2/fetch_vehicle_details.php";
-    private static final String FETCH_VEHICLES_URL = "http://blinkcab.host56/myCab2/fetch_vehicles.php";
-    private static final String SAVE_VEHICLE_URL = "http://blinkcab.host56/myCab2/save_vehicle.php";
+    private static final String FETCH_VEHICLE_DETAILS_URL = "http://cabeelk.com/myCab2/fetch_vehicle_details.php";
+    private static final String FETCH_VEHICLES_URL = "http://cabeelk.com/myCab2/fetch_vehicles.php";
+    private static final String SAVE_VEHICLE_URL = "http://cabeelk.com/myCab2/save_vehicle.php";
     private static final String TAG_SUCCESS= "success";
     private static final String TAG_MESSAGE= "message";
     private static final String TAG_SUCCESS1= "success";
@@ -241,11 +241,9 @@ EditText rno;
             super.onProgressUpdate(values);
             if(values[0].equals("car")) {
                 Vehicletype.setSelection(adapter.getPosition("car"), false);
-
             }
             else if(values[0].equals("van")) {
                Vehicletype.setSelection(adapter.getPosition("var"),false);
-
             }
             else if(values[0].equals("three wheeler")) {
                 Vehicletype.setSelection(adapter.getPosition("three wheeler"),false);

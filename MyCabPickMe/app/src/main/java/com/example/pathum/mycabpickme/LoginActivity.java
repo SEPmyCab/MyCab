@@ -39,32 +39,22 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     private Button btnlog;
     private ProgressDialog pDialog;
-
     JSONParser jsonParser = new JSONParser();
-
     GoogleCloudMessaging gcmObj;
     Context applicationContext;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+       // Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_login);
         btnlog=(Button)findViewById(R.id.B_login);
         emailField = (EditText)findViewById(R.id.ET_email);
         passwordField = (EditText)findViewById(R.id.ET_Password);
-        if(isNetworkAvailable()==false)
+        if(!isNetworkAvailable())
         {
             createNetErrorDialog();
-
         }
         applicationContext = getApplicationContext();
-
-
-
-
         getSupportActionBar().hide();
     }
     protected void createNetErrorDialog() {
@@ -92,6 +82,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         alert.show();
 
     }
+
+    /**
+     * Check whether internet connection is available
+     * @return
+     */
     private boolean isNetworkAvailable() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -132,6 +127,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method to confirm exit on back button pressed
+     */
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -149,14 +147,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 .show();
     }
 
-
+    /**
+     * Background thread creation for net based activities
+     */
     class PassengerrLogin extends AsyncTask<String, String, String> {
-
-
         boolean failure = false;
-
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -165,11 +160,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
-
             // pDialog.dismiss();
         }
-
-
         private boolean isValidPassword(String pass) {
             if (pass != null && pass.length() > 6) {
                 return true;
@@ -178,17 +170,13 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         }
         @Override
         protected String doInBackground(String... args) {
-
            /*
             TODO Auto-generated method stub
             Check for success tag
             */
-
             int success;
-
             String username = emailField.getText().toString();
             String regId = "";
-
             String password = passwordField.getText().toString();
             String msg = "";
             try {
@@ -203,69 +191,39 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 msg = "Error :" + ex.getMessage();
             }
             try {
-
-
-
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-
                 params.add(new BasicNameValuePair("email", username));
-
                 params.add(new BasicNameValuePair("password", password));
                 params.add(new BasicNameValuePair("regId",regId));
                 Log.d("request!", "starting");
-
-
-
-                JSONObject json = jsonParser.makeHttpRequest(ApplicationConstants.LOGIN_URL, "POST", params);
-
-
-
+                JSONObject json = jsonParser.makeHttpRequest(ApplicationConstants.LOGIN_URL, "POST", params);//Sending parameters to server php file
                 Log.d("Login attempt", json.toString());
-
-
-
                 success = json.getInt(ApplicationConstants.TAG_SUCCESS);
 
                 if (success == 1) {
-
                     Log.d("Login Successful!", json.toString());
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPrefs", 0);
                     SharedPreferences.Editor editor = pref.edit();
-
                     editor.putString("email", json.getString("email"));
                     editor.putString("fname", json.getString("fname"));
                     editor.commit();
-
-                    Intent i = new Intent(LoginActivity.this, MapsActivity.class);
-
-
+                    Intent i = new Intent(LoginActivity.this, MapsActivity.class);//Initialize intent
                     finish();
-
                     startActivity(i);
-
                     return json.getString(ApplicationConstants.TAG_MESSAGE);
-
                 }else{
-
                     Log.d("Login Failure!", json.getString(ApplicationConstants.TAG_MESSAGE));
-
                     return json.getString(ApplicationConstants.TAG_MESSAGE);
-
                 }
 
             } catch (JSONException e) {
-
                 e.printStackTrace();
-
             }
-
             return null;
-
         }
 
         @Override
         protected void onPostExecute(String file_url){
-
             pDialog.dismiss();
             if (file_url != null){
                 Toast.makeText(LoginActivity.this, file_url, Toast.LENGTH_LONG).show();
@@ -282,8 +240,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 new PassengerrLogin().execute();
                 break;
             case R.id.B_registerHere:
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);//Initialize intent
                 startActivity(intent);
+                break;
+            case R.id.B_forgotPassword:
+                Intent intentForgetPassword = new Intent(LoginActivity.this,ForgetPasswordActivity.class);  //Initialize intent
+                startActivity(intentForgetPassword);  //Start forget password activity
                 break;
         }
     }

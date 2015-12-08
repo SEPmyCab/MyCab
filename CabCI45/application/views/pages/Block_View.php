@@ -14,12 +14,15 @@
     
     <h2 align="center" style="color: darkblue">Block Drivers</h2><br>
           
-    <table class = "table-bordered" width="75%" align = "center">
+    <table class="table table-bordered table-hover">
+        <thead>
         <tr>
-            <th><strong>Driver's Name</strong></th>
-            <th><strong>Status</strong></th>
+            <th><strong><i class="glyphicon glyphicon-user"></i>&nbsp; Driver's Name</strong></th>
+            <th><strong><i class="glyphicon glyphicon-info-sign"></i>&nbsp; Status</strong></th>
         </tr>
+        </thead>
         
+        <tbody>
         <?php 
         foreach($dt1 as $details)
         {?>
@@ -29,7 +32,8 @@
                 <?php 
                 if($details['b_status'] == "Block" && $details['status'] != "BLOCKED")  
                 {?> 
-                    <a onclick="return confirm('Do you want to block this driver ?')" href ="<?php echo site_url('driver_controller/block/'.$details['Driver_Name']);?>">Block</a>
+                    <a onclick="return confirm('Do you want to block this driver ?')" href ="<?php echo site_url('driver_controller/block/'.$details['Driver_Name']);?>" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-ban-circle"></i>&nbsp; Block</a>
                    
                 <?php 
                 }
@@ -39,7 +43,8 @@
             </td>
         </tr>    
      <?php 
-     }?>  
+     }?>
+        </tbody>
     </table>
 
     <br><br>
@@ -47,13 +52,16 @@
     <h2 align="center" style="color: darkblue">Feedback of the Passengers</h2><br>
     
     <div style="height:300px;overflow:auto;">
-    <table class = "table-bordered" width="80%" align = "center" cellspacing="0">
+    <table class="table table-bordered table-hover" width="100%" align = "center">
+        <thead>
         <tr>
-            <th><strong>Passenger's Email</strong></th>
-            <th><strong>Driver's Name</strong></th>
-            <th><strong>Comments</strong></th>
-        </tr>
+            <th><strong><i class="glyphicon glyphicon-envelope"></i>&nbsp; Passenger's Email</strong></th>
+            <th><strong><i class="glyphicon glyphicon-user"></i>&nbsp; Driver's Name</strong></th>
+            <th><strong><i class="glyphicon glyphicon-comment"></i>&nbsp; Comments</strong></th>
+         </tr>
+        </thead>
         
+        <tbody>
         <?php 
         foreach($dt2 as $details)
         {?>
@@ -65,6 +73,7 @@
         <?php 
         }
         ?>  
+        </tbody> 
     </table>
     </div> 
     
